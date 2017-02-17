@@ -222,7 +222,7 @@ function os_restful_entity_delete($entity, $type) {
   $wrapper = entity_metadata_wrapper($type, $entity);
   $id = $wrapper->getIdentifier();
 
-  if ($id !== FALSE) {
+  if ($id !== FALSE && is_numeric($id)) {
     $extra = module_invoke_all('os_restful_entity_delete_data', $type, $entity);
     drupal_alter('os_restful_entity_delete_data', $extra);
 
