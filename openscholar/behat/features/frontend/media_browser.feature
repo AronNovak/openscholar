@@ -82,7 +82,7 @@ Feature: Media Browser
       And I wait "1 second" for the media browser to open
       And I should wait for the text "Please wait while we get information on your files." to "disappear"
       And I click on the tab "Previously uploaded files"
-      And I should see "kitten-2.jpg" in a "div.media-row" element
+      And I should see "kitten-2.jpg" in a ".media-row" element
       And I click on the tab "Upload from your computer"
       And I drop the file "duplicate/kitten-2.jpg" onto the "Drag and drop files here." area
       And I sleep for "5"
@@ -103,7 +103,7 @@ Feature: Media Browser
      And I wait "1 second" for the media browser to open
      And I should wait for the text "Please wait while we get information on your files." to "disappear"
      And I click on the tab "Previously uploaded files"
-     And I should see "kitten-2.jpg" in a "div.media-row" element
+     And I should see "kitten-2.jpg" in a ".media-row" element
      And I click on the tab "Upload from your computer"
      And I drop the file "kitten-2.jpg" onto the "Drag and drop files here." area
      And I sleep for "5"
@@ -111,9 +111,9 @@ Feature: Media Browser
      And I press the "Cancel" button
      And I should see the media browser "Upload from your computer" tab is active
     When I click on the tab "Previously uploaded files"
-    Then I should see "kitten-2.jpg" in a "div.media-row" element
-     And I should see "kitten-2_01.jpg" in a "div.media-row" element
-     And I should not see "kitten-2_02.jpg" in a "div.media-row" element
+    Then I should see "kitten-2.jpg" in a ".media-row" element
+     And I should see "kitten-2_01.jpg" in a ".media-row" element
+     And I should not see "kitten-2_02.jpg" in a ".media-row" element
      And I confirm the file "kitten-2.jpg" in the site "john" is not the same file as "kitten-2.jpg"
 
   @media_browser @javascript

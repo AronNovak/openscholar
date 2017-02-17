@@ -710,22 +710,33 @@ ul.nice-menu-down,
 .region-content-top .bio-teaser-block2 a {
     text-decoration: none !important;
     padding-right: 28px;
-    background: url("../images/sprite.png?456") 76px -109px no-repeat;
+    background: url("../images/sprite.png?456") 145px -109px no-repeat;
 }
 .region-content-top .bio-teaser-block2 a:hover {
-    background-position: 81px -109px;
+    background-position:150px -109px;
 }
 .bio-teaser-block2 a {
     text-decoration: none !important;
     padding-right: 28px;
     background: url("../images/sprite.png?456") 80px -207px no-repeat;
     transition: all .250s;
-    -webkit-transition: all .250s;
+    -webkit-transition: all .125s;
     border-bottom: 1px solid #fff;
 }
 .bio-teaser-block2 a:hover {
     background-position: 85px -207px;
 }
+.os-cvlink {
+    color: #fff !important;
+  
+    padding: 2px 7px;
+    border-radius: 3px;
+    text-decoration: none !important;
+    display: block;
+    width: 150px;
+    background: url("../images/sprite.png?456") 138px -109px no-repeat #065DB2;
+}
+
 .research-by-topic ul .item-list ul li .description {
     transition: all .250s;
     -webkit-transition: all .250s;
@@ -787,14 +798,8 @@ ul.nice-menu-down,
     padding-top: 10px;
     padding-bottom: 10px;
 }
-/* LOGGED IN PUSH THE PAGE DOWN */
 
-.logged-in #menu-bar {
-    border-top: 38px #fff solid;
-}
-.logged-in #page {
-    margin-top: 84px;
-}
+
 @-moz-document url-prefix() {}
 /* RESPONSIVE CSS - UNTIL I CAN FIGURE OUT WHY GARYKING RESP CSS FILE WONT LOAD */
 

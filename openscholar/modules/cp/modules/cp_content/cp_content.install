@@ -57,3 +57,9 @@ function cp_content_update_7006() {
 function cp_content_update_7007() {
   features_revert(array('cp_content' => array('views_view')));
 }
+/**
+ * Removes comment admin screen.
+ */
+function cp_content_update_7008() {
+  features_revert(array('cp_content' => array('views')));
+}

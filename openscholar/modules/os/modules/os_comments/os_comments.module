@@ -156,6 +156,57 @@ function os_comments_comment_save_vsite($comment_node_types) {
 }
 
 /**
+ * Implements hook_cp_settings().
+ *
+ * Adds field "Disqus shortname" to the CP > Settings form.
+ */
+function os_comments_cp_settings() {
+  $settings = array();
+
+  $vsite = vsite_get_vsite();
+  $spaces_features = $vsite->controllers->variable->get('spaces_features');
+  // Blog settings link won't appear in CP menu if blog app is not enabled.
+  if (!$spaces_features['os_blog']) {
+    return $settings;
+  }
+
+  // Returns empty array if Disqus module is not enabled.
+  if (!module_exists('disqus')) {
+    return $settings;
+  }
+
+  if ($vsite) {
+    $disqus_shortname = $vsite->controllers->variable->get('disqus_domain', 'space');
+  }
+  else {
+    $disqus_shortname = variable_get('disqus_domain', '');
+  }
+
+  $settings['disqus_domain'] = array(
+    'group' => array(
+      '#id' => 'blog_comments',
+      '#title' => t('Blog Comments'),
+      '#weight' => 2,
+      '#menu_parent' => 'app_settings',
+      '#help_link' => l(t('Learn more about blog comments'), 'http://docs.openscholar.harvard.edu/blogs', array('attributes' => array('target' => '_blank')))
+    ),
+    'form' => array(
+      '#type' => 'textfield',
+      '#title' => t('Disqus Shortname'),
+      '#default_value' => $disqus_shortname,
+      '#states' => array(
+        'visible' => array(
+          ':input[name="blog_comments_settings"]' => array('value' => 'disqus'),
+          ),
+        ),
+      '#description' => t('Enter the website shortname you used to register your Disqus account. If you registered <br/>http://example.disqus.com, you would enter "example" here. ') . '<a href="https://disqus.com/profile/signup/" target="_blank">Signup for a Disqus account &raquo;</a>' ,
+      ),
+  );
+
+  return $settings;
+}
+
+/**
  * Implements hook_node_view().
  *
  * Shows the "Add new comment" link on node teasers with a non-drupal comment

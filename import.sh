@@ -39,8 +39,10 @@ drush vset file_public_path "sites/default/files"
 drush vset file_private_path ""
 drush vset file_temporary_path "/tmp"
 
+# Make sure admin is not blocked
+drush sqlq "UPDATE users SET status=1 WHERE uid=1;"
+drush sqlq "DELETE FROM flood;"
+
 # Open site as admin.
 drush uli --uri=$2
-
-
 
