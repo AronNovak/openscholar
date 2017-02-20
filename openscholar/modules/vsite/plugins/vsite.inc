@@ -127,6 +127,11 @@ class vsite extends space_og {
                 'absolute' => TRUE,
                 'query' => drupal_get_query_parameters(),
               ));
+
+            // Allow local devel debugging on the node.
+            if (module_exists('devel') && arg(2) == 'devel') {
+              break;
+            }
             // Goto vsite's home <front> page
             if ($current_url != rtrim($space->get_absolute_url(), "/")) {
               purl_goto("<front>", array(
