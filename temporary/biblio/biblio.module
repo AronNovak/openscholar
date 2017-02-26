@@ -21,6 +21,37 @@
  */
 define('BIBLIO_VERSION', '7.x-1.x-dev');
 
+/**
+ * Implements hook_i18n_string_info().
+ */
+function biblio_i18n_string_info() {
+  $groups['biblio'] = array(
+    'title' => t('Biblio'),
+    'description' => t('Translatable Biblio items: field labels and hints.'),
+    'format' => FALSE,
+    'list' => TRUE,
+  );
+  return $groups;
+}
+
+/**
+ * Implements hook_i18n_string_list().
+ */
+function biblio_i18n_string_list($group) {
+  if ($group == 'biblio') {
+    $result = db_query("SELECT * FROM {biblio_fields} b
+              INNER JOIN {biblio_field_type} bt ON b.fid = bt.fid
+              INNER JOIN {biblio_field_type_data} btd ON btd.ftdid=bt.ftdid
+              WHERE bt.tid=:tid ORDER BY bt.weight ASC", array(':tid' => 0), array('fetch' => PDO::FETCH_ASSOC));
+
+    foreach ($result as $row) {
+      $strings['biblio']['field'][$row['fid']]['title'] = $row['title'];
+      $strings['biblio']['field'][$row['fid']]['hint'] = $row['hint'];
+    }
+    return $strings;
+  }
+}
+
 function _biblio_get_auth_types($auth_category, $biblio_type) {
   static $auth_types = array();
   if (empty($auth_types)) {
@@ -41,15 +72,16 @@ function _biblio_get_auth_type($auth_category, $biblio_type) {
 
 /**
  * Translate field titles and hints through the interface translation system, if
- * the i18nstrings module is enabled.
+ * the i18_string module is enabled.
  */
 function _biblio_localize_fields(&$fields) {
-  if (module_exists('i18nstrings')) {
+  if (module_exists('i18n_string')) {
     foreach ($fields as $key => $row) {
-      $fields[$key]['title'] = tt("biblio:field:{$row['ftdid']}:title", $fields[$key]['title']);
-      $fields[$key]['hint'] = tt("biblio:field:{$row['ftdid']}:hint", $fields[$key]['hint']);
+      $fields[$key]['title'] = i18n_string_translate("biblio:field:{$row['ftdid']}:title", $fields[$key]['title']);
+      $fields[$key]['hint'] = i18n_string_translate("biblio:field:{$row['ftdid']}:hint", $fields[$key]['hint']);
     }
   }
+  drupal_alter('biblio_localized_fields', $fields);
 }
 
 /**
