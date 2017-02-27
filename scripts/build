@@ -15,6 +15,17 @@ OPTIONS:
 EOF
 }
 
+# Includes all the shell scripts from a certain directory.
+scriptdir()
+{
+  for f in $1/*; do
+    if [[ -x $f ]]
+    then
+      . $f
+    fi
+  done
+}
+
 DOCROOT="www"
 OPSDIR=
 while getopts ":hd:o:" OPTION
@@ -41,6 +52,9 @@ done
 # Move to the top directory.
 ROOT="$(dirname $0)/.."
 cd $ROOT
+
+# Invoke project-specific post-build script.
+scriptdir "$(dirname $0)/pre-build"
 
 # Chores.
 (
@@ -120,3 +134,6 @@ CUR_DIR=$(pwd)
   $BOWER install
   cd -
 )
+
+# Invoke project-specific post-build script.
+scriptdir "$(dirname $0)/post-build"
